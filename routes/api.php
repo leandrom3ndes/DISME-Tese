@@ -287,8 +287,12 @@ Route::group(
                     '/dashboard/get_all_states_for_transaction/{id}',
                     'DashboardController@getStatesFromTransaction'
                 );
+
+            //Bi Element Leandro
+            Route::apiResource('bi_element', biElementController::class);
             }
         );
+
     }
 );
 //FIM TESTE
