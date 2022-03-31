@@ -1,6 +1,7 @@
 <?php
 
-Route::get('/login', 'DashboardController@index');
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BiElementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,7 @@ Route::get('/login', 'DashboardController@index');
 | contains the "web" middleware group. Now create something great!
 |
 */
-//
-//Route::apiResource('languages', 'LanguageController');
-//Route::apiResource('language_states', 'LanguageStateController');
-
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::resource('bi_elements', BiElementController::class);

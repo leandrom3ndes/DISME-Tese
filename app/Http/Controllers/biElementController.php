@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\bi_element;
+use App\Models\BiElement;
 use Illuminate\Http\Request;
 
-class biElementController extends Controller
+class BiElementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class biElementController extends Controller
      */
     public function index()
     {
-        $bi_elements = bi_element::latest()->paginate(5);;
+        $bi_elements = BiElement::latest()->paginate(5);;
+
         return view('bi_elements.index',compact('bi_elements'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -55,7 +56,7 @@ class biElementController extends Controller
             $input['preview'] = "$profileImage";
         }
 
-        bi_element::create($input);
+        BiElement::create($input);
 
         return redirect()->route('bi_elements.index')
             ->with('success','Dashboard criado com sucesso!');
@@ -64,37 +65,37 @@ class biElementController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\bi_element  $bi_element
+     * @param  \App\Models\BiElement  $biElement
      * @return \Illuminate\Http\Response
      */
-    public function show(bi_element $bi_element)
+    public function show(BiElement $biElement)
     {
-        return view('bi_elements.show',compact('bi_element'));
+        return view('bi_elements.show',compact('biElement'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\bi_element  $bi_element
+     * @param  \App\Models\BiElement  $biElement
      * @return \Illuminate\Http\Response
      */
-    public function edit(bi_element $bi_element)
+    public function edit(BiElement $biElement)
     {
-        return view('bi_elements.edit',compact('bi_element'));
+        return view('bi_elements.edit',compact('biElement'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\bi_element  $bi_element
+     * @param  \App\Models\BiElement  $biElement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, bi_element $bi_element)
+    public function update(Request $request, BiElement $biElement)
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'description' => 'required'
         ]);
 
         $input = $request->all();
@@ -108,24 +109,23 @@ class biElementController extends Controller
             unset($input['preview']);
         }
 
-        $bi_element->update($input);
+        $biElement->update($input);
 
         return redirect()->route('bi_elements.index')
-            ->with('success','Dashboard atualizado com sucesso!');
+            ->with('success','Dashboard atualizado com sucesso');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\bi_element  $bi_element
+     * @param  \App\Models\BiElement  $biElement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(bi_element $bi_element)
+    public function destroy(BiElement $biElement)
     {
-        $bi_element->delete();
+        $biElement->delete();
 
         return redirect()->route('bi_elements.index')
             ->with('success','Dashboard eliminado com sucesso!');
     }
-
 }
